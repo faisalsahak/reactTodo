@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {TodoForm} from './components/todo/TodoForm';
 import {TodoList} from './components/todo/TodoList';
+import{addTodo, generateId} from './components/lib/todoHelpers'
 
 class App extends Component {
   constructor(props){
@@ -17,11 +18,23 @@ class App extends Component {
       currentTodo: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleInputChange(event){
     this.setState({currentTodo: event.target.value})
   }
+  handleSubmit(e){
+    e.preventDefault();
+    const newId = generateId()
+    const newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
+    const updateTodo = addTodo(this.state.todos, newTodo)
+    this.setState({
+      todos: updateTodo,
+      currentTodo: ''
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -30,7 +43,10 @@ class App extends Component {
           <h2>React Todos</h2>
         </div>
         <div className ="Todo-App">
-          <TodoForm handleInputChange = {this.handleInputChange} currentTodo ={this.state.currentTodo}/>
+          <TodoForm handleInputChange = {this.handleInputChange}
+             currentTodo ={this.state.currentTodo}
+             handleSubmit = {this.handleSubmit}/>
+
           <TodoList todos ={this.state.todos}/>
         </div>
       </div>
