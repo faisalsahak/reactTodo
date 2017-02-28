@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {TodoForm} from './components/todo/TodoForm';
+import {TodoList} from './components/todo/TodoList';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      todos: [
+        {id: 1, name: 'Learn JSX', isComplete: false},
+        {id: 2, name: 'Build Awsome App', isComplete: false},
+        {id: 3, name: 'Ship Awsome App', isComplete: true}
+      ],
+      currentTodo: ''
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+  }
+
+  handleInputChange(event){
+    this.setState({currentTodo: event.target.value})
+  }
   render() {
     return (
       <div className="App">
@@ -10,17 +29,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>React Todos</h2>
         </div>
-        <div classname ="Todo-App">
-          <form>
-            <input className="text"/>
-          </form>
-          <div className = "Todo-List">
-            <ul>
-              <li><input type="checkbox" />Learn JSX</li>
-              <li><input type="checkbox" />Build Awsome App</li>
-              <li><input type="checkbox" />Ship Awsome App</li>
-            </ul>
-          </div>
+        <div className ="Todo-App">
+          <TodoForm handleInputChange = {this.handleInputChange} currentTodo ={this.state.currentTodo}/>
+          <TodoList todos ={this.state.todos}/>
         </div>
       </div>
     );
