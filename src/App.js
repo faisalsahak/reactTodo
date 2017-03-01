@@ -6,10 +6,7 @@ import {TodoList} from './components/todo/TodoList';
 import{addTodo, generateId} from './components/lib/todoHelpers'
 
 class App extends Component {
-  constructor(props){
-    super(props)
-
-    this.state = {
+    state = {
       todos: [
         {id: 1, name: 'Learn JSX', isComplete: false},
         {id: 2, name: 'Build Awsome App', isComplete: false},
@@ -17,14 +14,12 @@ class App extends Component {
       ],
       currentTodo: ''
     }
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
 
-  handleInputChange(event){
+  handleInputChange =(event)=>{
     this.setState({currentTodo: event.target.value})
   }
-  handleSubmit(e){
+
+  handleSubmit = (e) =>{
     e.preventDefault();
     const newId = generateId()
     const newTodo = {id: newId, name: this.state.currentTodo, isComplete: false}
